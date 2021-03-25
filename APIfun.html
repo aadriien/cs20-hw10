@@ -1,0 +1,82 @@
+<!doctype html>
+<html> 
+<head>
+	<title>API Fun - Jokes</title>
+	<meta charset="utf-8"/> 
+	<script>         
+        
+        function get_joke_of_the_day() {
+            // instantiate request (xhttp) object
+            var xhttp = new XMLHttpRequest();
+            console.log("1 - xhttp object created");
+            
+            // get JSON file via URL
+            xhttp.open("GET", "https://api.jokes.one/jod?category=animal", true);
+            console.log("2 - opened xhttp file");
+            
+            // create event handler to track successful access
+            xhttp.onreadystatechange = function() {
+                console.log("3 - readystatechange event fired");
+                
+            	 if (this.readyState == 4 && this.status == 200) {
+            	     // access the result 
+            	     result = this.responseText;
+                     jokeInfo = JSON.parse(result);
+                     
+                     // update text displayed on page
+                     var jokeText = jokeInfo.contents.jokes[0].joke.text;                     
+                     document.getElementById("data").innerHTML = jokeText;
+                     
+            	 }
+                 else if (request.readyState == 4 && request.status != 200) {
+                     document.getElementById("data").innerHTML = "Something is wrong! Check the logs for completion.";
+ 				 }
+ 
+ 				 else if (request.readyState == 3) {
+                     document.getElementById("data").innerHTML = "Something is wrong! It's not ready yet.";
+ 				 }
+            };    
+            
+            // send request
+            xhttp.send();
+            console.log("4 - xhttp sent");
+        }
+    </script>     
+</head> 
+
+<body onload="get_joke_of_the_day()">     
+    <h1>Joke of the Day</h1> 
+	<div id="data">Loading...</div> 
+    
+    <br/><br/>
+    
+    <p id="description">
+        The API that I have selected (shown above) gets an animal-related joke 
+        of the day. <br/><br/> 
+        
+        The website offering this API can be found 
+        <a href="https://jokes.one/api/joke/#js" target="_blank">here</a>.
+        
+        <br/><br/> For my API request, I first made an instance of the requested
+        object via "new XMLHttpRequest()". Then I utilized "GET", a provided URL, 
+        and the boolean "true" to open my request. "GET" allowed for data retrieval, 
+        the URL specified the location of the JSON file I was accessing, and the 
+        boolean "true" confirmed that the data would be sent asynchronously. 
+        Following this, I checked that the information loaded properly by reviewing 
+        the readyState (calling and receiving of data) and the status (creation 
+        of requested resource). Here, I was looking for the readyState to equal
+        4 (done, operation completed), and the status to equal 200 (success). 
+        <br/><br/><br/>
+        
+        I imagine this API would be helpful for a few reasons: 
+        <ul>
+            <li>It will give folks a laugh at the beginning of each day.</li>
+            <li>It will keep folks up to date on their terrible dad jokes.</li>
+            <li>It will demonstrate the power of publicly available data.</li>
+        </ul>
+    </p>
+</body> 
+</html>
+        
+        
+    
